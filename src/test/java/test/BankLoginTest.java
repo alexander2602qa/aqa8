@@ -18,7 +18,7 @@ public class BankLoginTest {
 
     @Test
     void shouldSuccessfulLogin() {
-        var loginPage = open("http://localhost:9999", LoginPage.class);
+        var loginPage = open("http://localhost:9999/", LoginPage.class);
         var authInfo = DataHelper.getAuthInfoWithTestData();
         var verificationPage = loginPage.validLogin(authInfo);
         var verificationCode = SQLHelper.getVerificationCode();
@@ -27,7 +27,7 @@ public class BankLoginTest {
 
     @Test
     void shouldGetErrorNotificationIfDateNotIncludeInDB() {
-        var loginPage = open("http://localhost:9999", LoginPage.class);
+        var loginPage = open("http://localhost:9999/", LoginPage.class);
         var authInfo = DataHelper.generateRandomUser();
         loginPage.validLogin(authInfo);
         loginPage.verifyErrorNotificationVisibility();
@@ -35,7 +35,7 @@ public class BankLoginTest {
 
     @Test
     void shouldGetErrorIfIncorrectVerificationCode() {
-        var loginPage = open("http://localhost:9999", LoginPage.class);
+        var loginPage = open("http://localhost:9999/", LoginPage.class);
         var authInfo = DataHelper.getAuthInfoWithTestData();
         var verificationPage = loginPage.validLogin(authInfo);
         var verificationCode = DataHelper.generateRandomVerificationCode();
@@ -45,18 +45,11 @@ public class BankLoginTest {
 
     @Test
     void shouldGetErrorIfLoginIsCorrectButPasswordIsIncorrect() {
-        var loginPage = open("http://localhost:9999", LoginPage.class);
+        var loginPage = open("http://localhost:9999/", LoginPage.class);
         var correctLogin = DataHelper.getAuthInfoWithTestData().getLogin();
         var incorrectPassword = DataHelper.generateRandomUser().getPassword();
         loginPage.validLogin(new DataHelper.AuthInfo(correctLogin, incorrectPassword));
         loginPage.verifyErrorNotificationVisibility();
     }
-
-//    @Test
-//    void shouldBlockIfIncorrectPasswordInputed3Times() {
-//        var loginPage = open("http://localhost:9999", LoginPage.class);
-//        var authInfo = DataHelper.generateRandomUser();
-//        var verificationPage = loginPage.validLogin(authInfo);
-//    }
 
 }

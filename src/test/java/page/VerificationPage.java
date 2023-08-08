@@ -8,8 +8,8 @@ import static com.codeborne.selenide.Selenide.$;
 public class VerificationPage {
 
     private final SelenideElement codeField = $("[data-test-id=code] input");
-    private final SelenideElement verifyButton = $("data-test-id=action-verity");
-    private final SelenideElement errorNotification = $("data-test-id=error-notification");
+    private final SelenideElement verifyButton = $("[data-test-id=action-verity]");
+    private final SelenideElement errorNotification = $("[data-test-id=error-notification]");
 
     public VerificationPage() {
         codeField.shouldBe(Condition.visible);
