@@ -26,10 +26,10 @@ public class BankLoginTest {
     }
 
     @Test
-    void shouldGetErrorNotificationIfDateNotIncludeInDB() {
+    void shouldGetErrorNotificationIfLoginAndPasswordAreNotIncludeInDB() {
         var loginPage = open("http://localhost:9999/", LoginPage.class);
         var authInfo = DataHelper.generateRandomUser();
-        loginPage.validLogin(authInfo);
+        loginPage.login(authInfo);
         loginPage.verifyErrorNotificationVisibility();
     }
 
@@ -39,7 +39,7 @@ public class BankLoginTest {
         var authInfo = DataHelper.getAuthInfoWithTestData();
         var verificationPage = loginPage.validLogin(authInfo);
         var verificationCode = DataHelper.generateRandomVerificationCode();
-        verificationPage.validVerify(verificationCode.getCode());
+        verificationPage.verify(verificationCode.getCode());
         verificationPage.verifyErrorNotificationVisibility();
     }
 
@@ -48,7 +48,7 @@ public class BankLoginTest {
         var loginPage = open("http://localhost:9999/", LoginPage.class);
         var correctLogin = DataHelper.getAuthInfoWithTestData().getLogin();
         var incorrectPassword = DataHelper.generateRandomUser().getPassword();
-        loginPage.validLogin(new DataHelper.AuthInfo(correctLogin, incorrectPassword));
+        loginPage.login(new DataHelper.AuthInfo(correctLogin, incorrectPassword));
         loginPage.verifyErrorNotificationVisibility();
     }
 
